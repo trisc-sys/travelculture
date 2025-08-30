@@ -14,12 +14,19 @@
     body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
     a{color:inherit;text-decoration:none}
     .container{width:min(1100px,92%);margin:0 auto}
+
+    /* HEADER */
     header{position:sticky;top:0;backdrop-filter:blur(6px);background:rgba(15,23,42,.7);border-bottom:1px solid #1f2937;z-index:50}
     nav{display:flex;align-items:center;justify-content:space-between;padding:.8rem 0}
-    .logo{display:flex;align-items:center;gap:.6rem}.logo svg{width:28px;height:28px}.logo .word{font-weight:800;letter-spacing:.4px}
-    .links a{opacity:.85;margin-left:1rem}.links a:hover{opacity:1}
+    .logo{display:flex;align-items:center;gap:.6rem}
+    .logo svg{width:28px;height:28px}
+    .logo .word{font-weight:800;letter-spacing:.4px}
+    .links a{opacity:.85;margin-left:1rem}
+    .links a:hover{opacity:1}
     .controls{display:flex;gap:.5rem;align-items:center}
     button.icon{border:1px solid #334155;background:#0b1224;color:#e5e7eb;border-radius:10px;padding:.45rem .6rem;cursor:pointer}
+
+    /* HERO + SLIDESHOW */
     .hero{position:relative;min-height:55vh;display:flex;align-items:center;justify-content:center;text-align:center}
     .slideshow{position:absolute;inset:0;overflow:hidden;border-bottom:1px solid #1f2937}
     .slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s}
@@ -27,92 +34,167 @@
     .hero-content{position:relative;z-index:2}
     .cta{display:inline-block;padding:.7rem 1rem;border-radius:12px;border:1px solid #334155}
     .primary{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#0b1020;border:none;font-weight:700}
+
     section{padding:2rem 0} h2{font-size:1.4rem;margin:0 0 1rem}
+
+    /* CARDS */
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1rem}
     .card{grid-column:span 12;background:var(--card);border:1px solid #1f2937;border-radius:16px;overflow:hidden}
-    @media(min-width:640px){.card{grid-column:span 6}} @media(min-width:992px){.card{grid-column:span 4}}
-    .card img{width:100%;height:180px;object-fit:cover}.content{padding:1rem}.badge{display:inline-block;font-size:.75rem;padding:.15rem .5rem;border:1px solid #334155;border-radius:999px;color:var(--muted);margin-bottom:.5rem}
+    @media(min-width:640px){.card{grid-column:span 6}}
+    @media(min-width:992px){.card{grid-column:span 4}}
+    .card img{width:100%;height:180px;object-fit:cover}
+    .content{padding:1rem}
+    .badge{display:inline-block;font-size:.75rem;padding:.15rem .5rem;border:1px solid #334155;border-radius:999px;color:var(--muted);margin-bottom:.5rem}
+
+    /* MAPPA + CONTATTI */
     #map{height:360px;border-radius:16px;border:1px solid #1f2937}
-    form .row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}@media(max-width:700px){form .row{grid-template-columns:1fr}}
+    form .row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+    @media(max-width:700px){form .row{grid-template-columns:1fr}}
     input,textarea{width:100%;padding:.7rem .9rem;border-radius:10px;border:1px solid #334155;background:#f1f5f9;color:#0b1324}
+
     footer{border-top:1px solid #1f2937;color:#46566b;padding:1.5rem 0;text-align:center}
   </style>
 </head>
-
-<main>
-
-  <!-- Leaflet JS per la mappa (una sola volta nell'HTML) -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<script>
-(async function () {
-  // Slideshow 4 foto (ogni 3s)
-  const slides = [...document.querySelectorAll('.slide')];
-  if (slides.length) {
-    let i = 0;
-    setInterval(() => {
-      slides[i].classList.remove('active');
-      i = (i + 1) % slides.length;
-      slides[i].classList.add('active');
-    }, 3000);
-  }
-
-  // Tema (default chiaro)
-  const themeBtn = document.getElementById('themeBtn');
-  function setTheme(t){ document.body.classList.toggle('light', t==='light'); localStorage.setItem('theme', t); }
-  setTheme(localStorage.getItem('theme') || 'light');
-  themeBtn?.addEventListener('click', ()=> setTheme(document.body.classList.contains('light') ? 'dark' : 'light'));
-
-  // Carica i post
-  const cards = document.getElementById('cards');
-  try {
-    const res = await fetch('posts.json', { cache: 'no-store' }); // stesso dominio
-    const { posts } = await res.json();
-    console.log('Loaded posts:', posts);
-
-    // 3 card più recenti
-    cards.innerHTML = posts.slice(0, 3).map(p => `
-      <a class="card" href="/articoli/${encodeURIComponent(p.slug)}.html">
-        <img src="${p.img}" alt="${p.title}">
-        <div class="content">
-          <span class="badge">${p.city}</span>
-          <h3>${p.title}</h3>
-          <p>${p.excerpt}</p>
+<body class="light">
+  <!-- HEADER -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="g" x1="0" y1="0" x2="24" y2="24">
+                <stop stop-color="#22d3ee"/><stop offset="1" stop-color="#a78bfa"/>
+              </linearGradient>
+            </defs>
+            <path d="M12 22s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12Z" stroke="url(#g)" stroke-width="1.6"/>
+            <circle cx="12" cy="10" r="2.8" stroke="url(#g)" stroke-width="1.6"/>
+          </svg>
+          <div class="word">TRAVELCULTURE</div>
         </div>
-      </a>
-    `).join('');
+        <div class="links">
+          <a href="#places">Luoghi da esplorare</a>
+          <a href="#explore">Esplora</a>
+          <a href="#contact">Contatti</a>
+        </div>
+        <div class="controls">
+          <button id="themeBtn" class="icon" aria-label="Cambia tema">🌓</button>
+        </div>
+      </nav>
+    </div>
+  </header>
 
-    // Mappa con marker che puntano alle pagine articolo
-    const map = L.map('map', { scrollWheelZoom: false });
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
-    const group = L.featureGroup(
-      posts.map(p => L.marker(p.coords).bindPopup(
-        `<strong>${p.title}</strong><br>${p.city}<br><a href="/articoli/${p.slug}.html">Apri articolo</a>`
-      ))
-    );
-    group.addTo(map);
-    map.fitBounds(group.getBounds().pad(0.3));
-  } catch (err) {
-    console.error(err);
-    cards.innerHTML = '<p class="small">Errore nel leggere posts.json.</p>';
-  }
-})();
-</script>
-
-
-  <!-- CONTATTI -->
-  <section id="contact" class="container">
-    <h2>Contatti</h2>
-    <form id="contactForm" action="mailto:youremail@example.com" method="post" enctype="text/plain">
-      <div class="row">
-        <label>Nome<br><input name="nome" required></label>
-        <label>Email<br><input type="email" name="email" required></label>
+  <main>
+    <!-- HERO con slideshow -->
+    <section class="hero">
+      <div class="slideshow">
+        <img class="slide active" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600" alt="Mare">
+        <img class="slide"        src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1600" alt="Montagna">
+        <img class="slide"        src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600" alt="Collina">
+        <img class="slide"        src="https://images.unsplash.com/photo-1508766206392-8bd5cf550d1b?w=1600" alt="Lago">
       </div>
-      <label>Messaggio<br><textarea name="messaggio" required></textarea></label>
-      <div style="margin-top:.8rem;display:flex;gap:.6rem;align-items:center">
-        <button class="cta primary" type="submit">Invia</button>
-        <span class="small">Vuoi l’invio senza mailto? Posso collegare una funzione serverless su Vercel.</span>
+      <div class="hero-content container">
+        <h1>Esplora il mondo con me</h1>
+        <p>Diari di viaggio, consigli e cultura da mare, montagna, colline e laghi.</p>
+        <div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+          <a class="cta primary" href="#places">Luoghi da esplorare</a>
+          <a class="cta" href="#explore">Vai alla mappa</a>
+        </div>
       </div>
-    </form>
-  </section>
-</main>
+    </section>
+
+    <!-- LUOGHI DA ESPLORARE -->
+    <section id="places" class="container">
+      <h2>Luoghi da esplorare</h2>
+      <div id="cards" class="grid"></div>
+    </section>
+
+    <!-- MAPPA -->
+    <section id="explore" class="container">
+      <h2>Esplora</h2>
+      <div id="map"></div>
+    </section>
+
+    <!-- CONTATTI -->
+    <section id="contact" class="container">
+      <h2>Contatti</h2>
+      <form id="contactForm" action="mailto:youremail@example.com" method="post" enctype="text/plain">
+        <div class="row">
+          <label>Nome<br><input name="nome" required></label>
+          <label>Email<br><input type="email" name="email" required></label>
+        </div>
+        <label>Messaggio<br><textarea name="messaggio" required></textarea></label>
+        <div style="margin-top:.8rem;display:flex;gap:.6rem;align-items:center">
+          <button class="cta primary" type="submit">Invia</button>
+          <span class="small">Vuoi l’invio senza mailto? Posso collegare una funzione serverless su Vercel.</span>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year"></span> TravelCulture</div>
+  </footer>
+
+  <!-- JS Leaflet -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Script principale -->
+  <script>
+    // Slideshow
+    const slides = [...document.querySelectorAll('.slide')];
+    if (slides.length) {
+      let i = 0;
+      setInterval(() => {
+        slides[i].classList.remove('active');
+        i = (i + 1) % slides.length;
+        slides[i].classList.add('active');
+      }, 3000);
+    }
+
+    // Tema
+    const themeBtn = document.getElementById('themeBtn');
+    function setTheme(t){ document.body.classList.toggle('light', t==='light'); localStorage.setItem('theme', t); }
+    setTheme(localStorage.getItem('theme') || 'light');
+    themeBtn?.addEventListener('click', ()=> setTheme(document.body.classList.contains('light') ? 'dark' : 'light'));
+
+    // Cards + Mappa
+    const cards = document.getElementById('cards');
+    (async () => {
+      try {
+        const res = await fetch('posts.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('posts.json non trovato');
+        const { posts } = await res.json();
+
+        // 3 card
+        cards.innerHTML = posts.slice(0,3).map(p => `
+          <a class="card" href="/articoli/${encodeURIComponent(p.slug)}.html">
+            <img src="${p.img}" alt="${p.title}">
+            <div class="content">
+              <span class="badge">${p.city}</span>
+              <h3>${p.title}</h3>
+              <p>${p.excerpt}</p>
+            </div>
+          </a>
+        `).join('');
+
+        // Mappa
+        const map = L.map('map', { scrollWheelZoom:false });
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19 }).addTo(map);
+        const group = L.featureGroup(
+          posts.map(p => L.marker(p.coords).bindPopup(
+            `<strong>${p.title}</strong><br>${p.city}<br><a href="/articoli/${p.slug}.html">Apri articolo</a>`
+          ))
+        );
+        group.addTo(map);
+        if (group.getLayers().length) map.fitBounds(group.getBounds().pad(0.3)); else map.setView([20,0],2);
+      } catch (e) {
+        console.error(e);
+        cards.innerHTML = '<p class="small">Errore nel leggere posts.json.</p>';
+      }
+    })();
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
