@@ -1,0 +1,31 @@
+{
+  "posts": [
+    {
+      "slug": "milano",
+      "title": "Milano in 24 ore",
+      "city": "Milano, Italia",
+      "coords": [45.4642, 9.19],
+      "img": "https://images.unsplash.com/photo-1543349689-9a4d426bee8e?w=1600",
+      "excerpt": "Guida rapida per Duomo, Galleria, Brera e Navigli.",
+      "body": "Itinerario lampo con suggerimenti su metro giornaliera, terrazza del Duomo e aperitivo sui Navigli."
+    },
+    {
+      "slug": "cusco",
+      "title": "Cusco: 10 gemme nascoste",
+      "city": "Cusco, Perù",
+      "coords": [-13.53195, -71.9675],
+      "img": "https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?w=1600",
+      "excerpt": "Luoghi meno turistici, consigli su orari e altitudine.",
+      "body": "San Blas, mercati locali e siti meno battuti attorno a Cusco. Base perfetta per la Valle Sacra."
+    },
+    {
+      "slug": "cappadocia",
+      "title": "Cappadocia: mongolfiere e valli",
+      "city": "Cappadocia, Turchia",
+      "coords": [38.643, 34.835],
+      "img": "https://images.unsplash.com/photo-1544989164-31dc3c645987?w=1600",
+      "excerpt": "Tra camini delle fate e voli all’alba.",
+      "body": "Come scegliere il volo in mongolfiera, i panorami migliori e i trekking nelle valli."
+    }
+  ]
+}
