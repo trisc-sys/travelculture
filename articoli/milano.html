@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<style>
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#0f172a;color:#e5e7eb;line-height:1.6}
+a{color:inherit;text-decoration:none}
+.container{width:min(900px,92%);margin:0 auto}
+header{position:sticky;top:0;background:rgba(15,23,42,.7);backdrop-filter:blur(6px);border-bottom:1px solid #1f2937}
+nav{display:flex;align-items:center;justify-content:space-between;padding:.8rem 0}
+.logo{display:flex;gap:.6rem;align-items:center}
+.logo svg{width:24px;height:24px}
+.hero{padding:1.2rem 0}
+.hero img{width:100%;height:300px;object-fit:cover;border-radius:14px;border:1px solid #1f2937}
+h1{margin:1rem 0 .2rem;font-size:1.8rem}
+.small{color:#9ca3af}
+article{padding:1rem 0}
+footer{border-top:1px solid #1f2937;color:#9ca3af;text-align:center;padding:1rem 0;margin-top:1rem}
+</style>
+</head>
+<body>
+<header class="container">
+<nav>
+<div class="logo">
+<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12Z" stroke="#22d3ee" stroke-width="1.6"/><circle cx="12" cy="10" r="2.8" stroke="#a78bfa" stroke-width="1.6"/></svg>
+<strong>TRAVELCULTURE</strong>
+</div>
+<div>
+<a href="/">Home</a>
+</div>
+</nav>
+</header>
+
+
+<main class="container">
+<div class="hero">
+<img src="https://images.unsplash.com/photo-1543349689-9a4d426bee8e?w=1600" alt="Milano" />
+</div>
+<h1>Milano in 24 ore</h1>
+<p class="small">Milano, Italia</p>
+<article>
+<p>Itinerario lampo tra <strong>Duomo</strong>, <strong>Galleria Vittorio Emanuele II</strong>, <strong>Brera</strong> e <strong>Navigli</strong>. Inizia presto con la terrazza del Duomo (prenota l’ingresso <em>skip‑the‑line</em>), quindi passeggia verso Brera per pranzo. Nel pomeriggio visita il Castello Sforzesco e chiudi sui Navigli al tramonto.</p>
+<p><strong>Trasporti:</strong> abbonamento giornaliero ATM, linea M1 e M2 coprono quasi tutto. <strong>Tip:</strong> prenota il Duomo la sera prima; per l’aperitivo prova zona Darsena.</p>
+</article>
+<p><a href="/">← Torna alla home</a></p>
+</main>
+
+
+<footer>
+<div class="container">© <span id="year"></span> TravelCulture</div>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear()</script>
+</body>
+</html>
+
