@@ -1,136 +1,248 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TravelCulture 🌍</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TravelCulture – Diario di Viaggi</title>
+  <meta name="description" content="Blog di viaggi bilingue IT/EN con guide pratiche, consigli e cultura.">
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      color: #333;
+    :root {
+      --bg: #0f172a; --card:#111827; --muted:#9ca3af; --text:#e5e7eb; --acc:#22d3ee; --acc2:#a78bfa;
     }
-    header {
-      background: #222;
-      color: #fff;
-      padding: 1rem;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 1.8rem;
-    }
-    nav {
-      margin-top: 0.5rem;
-    }
-    nav a {
-      color: #ddd;
-      margin: 0 10px;
-      text-decoration: none;
-    }
-    nav a:hover {
-      color: #fff;
-    }
-    .hero {
-      background: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200") no-repeat center/cover;
-      color: white;
-      text-align: center;
-      padding: 5rem 1rem;
-    }
-    .hero h2 {
-      font-size: 2rem;
-      margin: 0;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
-    }
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 2rem 1rem;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-    }
-    .card {
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .card img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-    }
-    .card .content {
-      padding: 1rem;
-    }
-    .card h3 {
-      margin: 0 0 0.5rem;
-    }
-    footer {
-      background: #222;
-      color: #ccc;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
+    *{box-sizing:border-box} html,body{margin:0;padding:0}
+    body{font-family: system-ui,-apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--text); line-height:1.6}
+    a{color:inherit}
+    .container{width:min(1100px,92%);margin:0 auto}
+    header{position:sticky;top:0;backdrop-filter: blur(6px); background:rgba(15,23,42,.7); border-bottom:1px solid #1f2937; z-index:50}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:.8rem 0}
+    .brand{font-weight:800;letter-spacing:.3px}
+    .links a{opacity:.8;text-decoration:none;margin-left:1rem}
+    .links a:hover{opacity:1}
+    .controls{display:flex;gap:.5rem;align-items:center}
+    button.icon{border:1px solid #334155;background:#0b1224;color:var(--text);border-radius:10px;padding:.45rem .6rem;cursor:pointer}
+
+    .hero{padding:4rem 0 2.2rem;text-align:center}
+    .hero h1{font-size:clamp(1.8rem,3vw,3rem);margin:0 0 .6rem}
+    .hero p{color:var(--muted);margin:0 auto 1rem;max-width:60ch}
+    .cta{display:inline-block;padding:.7rem 1rem;border-radius:12px;border:1px solid #334155;text-decoration:none}
+    .primary{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#0b1020;border:none;font-weight:700}
+
+    section{padding:2rem 0}
+    h2{font-size:1.4rem;margin:0 0 1rem}
+
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1rem}
+    .card{grid-column:span 12;background:var(--card);border:1px solid #1f2937;border-radius:16px;overflow:hidden;transition:transform .12s ease}
+    .card:hover{transform:translateY(-3px)}
+    @media(min-width:640px){.card{grid-column:span 6}}
+    @media(min-width:992px){.card{grid-column:span 4}}
+    .card img{width:100%;height:180px;object-fit:cover;display:block}
+    .content{padding:1rem}
+    .badge{display:inline-block;font-size:.75rem;padding:.15rem .5rem;border:1px solid #334155;border-radius:999px;color:var(--muted);margin-bottom:.5rem}
+    .small{font-size:.9rem;color:var(--muted)}
+
+    .about{display:grid;grid-template-columns:1fr;gap:1rem}
+    @media(min-width:900px){.about{grid-template-columns:1.1fr .9fr;align-items:center}}
+    .box{background:var(--card);border:1px solid #1f2937;border-radius:16px;padding:1.2rem}
+
+    footer{border-top:1px solid #1f2937;color:var(--muted);padding:1.5rem 0;text-align:center}
+
+    /* Ricerca */
+    .toolbar{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin:1rem 0}
+    input.search{width:min(500px,100%);padding:.6rem .8rem;border-radius:10px;border:1px solid #334155;background:#0b1224;color:var(--text)}
+    .hidden{display:none}
+
+    /* Back to top */
+    #topBtn{position:fixed;right:16px;bottom:16px;opacity:0;pointer-events:none;transition:.2s;}
+    #topBtn.show{opacity:1;pointer-events:auto}
+
+    /* Light theme (toggle) */
+    body.light{--bg:#f8fafc;--card:#ffffff;--text:#0b1324;--muted:#445266}
   </style>
 </head>
 <body>
-
   <header>
-    <h1>TravelCulture 🌍</h1>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#articoli">Articoli</a>
-      <a href="#about">Chi sono</a>
-    </nav>
+    <div class="container">
+      <nav>
+        <div class="brand">🌍 TravelCulture</div>
+        <div class="controls">
+          <button id="langBtn" class="icon" aria-label="Cambia lingua">IT/EN</button>
+          <button id="themeBtn" class="icon" aria-label="Cambia tema">🌓</button>
+        </div>
+      </nav>
+    </div>
   </header>
 
-  <section class="hero" id="home">
-    <h2>Esplora il mondo con me</h2>
-    <p>Diari di viaggio, consigli e cultura da tutto il mondo</p>
-  </section>
+  <main>
+    <section class="hero container">
+      <h1 data-i18n="hero_title">Esplora il mondo con me</h1>
+      <p data-i18n="hero_sub">Diari di viaggio, consigli e cultura da tutto il mondo.</p>
+      <div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+        <a class="cta primary" href="#post" data-i18n="cta_read">Leggi gli articoli</a>
+        <a class="cta" href="#about" data-i18n="cta_about">Chi sono</a>
+      </div>
+    </section>
 
-  <main class="container" id="articoli">
-    <h2>Articoli recenti</h2>
-    <div class="grid">
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1543349689-9a4d426bee8e?w=800" alt="Milano">
-        <div class="content">
-          <h3>Milano in 24 ore</h3>
-          <p>Una guida rapida per visitare Milano in un solo giorno.</p>
+    <section id="post" class="container">
+      <h2 data-i18n="recent_title">Articoli recenti</h2>
+
+      <!-- Toolbar: ricerca e filtro categoria -->
+      <div class="toolbar">
+        <input id="search" class="search" type="search" placeholder="Cerca articoli..."/>
+        <button class="icon" data-filter="all">Tutti</button>
+        <button class="icon" data-filter="Italia">Italia</button>
+        <button class="icon" data-filter="Perù">Perù</button>
+        <button class="icon" data-filter="Consigli">Consigli</button>
+      </div>
+
+      <div id="cards" class="grid">
+        <!-- Le card sono generate da JS usando i dati sotto (dataItems) -->
+      </div>
+      <p class="small" style="margin-top:.6rem" data-i18n="hint_edit">Suggerimento: modifica i dati nel codice per aggiungere articoli in 10 secondi.</p>
+    </section>
+
+    <section id="about" class="container">
+      <h2 data-i18n="about_title">Chi sono</h2>
+      <div class="about">
+        <div class="box">
+          <p data-i18n="about_p1">Ciao! Sono Alessandro, appassionato di viaggi e culture. Qui raccolgo itinerari e appunti utili (IT/EN) per organizzare viaggi senza stress e senza spendere una fortuna.</p>
+          <p data-i18n="about_p2">Questo sito è statico, veloce e gratuito: perfetto per guide, portfolio e progetti personali.</p>
+        </div>
+        <div class="box">
+          <ul>
+            <li>🌐 <span data-i18n="about_bi">Bilingue: Italiano / English</span></li>
+            <li>⚡ <span data-i18n="about_fast">Veloce da caricare su mobile</span></li>
+            <li>🧩 <span data-i18n="about_easy">Facile da estendere (nuove pagine, gallery)</span></li>
+            <li>💸 <span data-i18n="about_free">Hosting gratuito su Vercel</span></li>
+          </ul>
         </div>
       </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?w=800" alt="Perù">
-        <div class="content">
-          <h3>Cusco segreta</h3>
-          <p>10 gemme nascoste da scoprire nella capitale Inca.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800" alt="Mare">
-        <div class="content">
-          <h3>Viaggi low cost</h3>
-          <p>Come organizzare viaggi economici senza rinunciare al divertimento.</p>
-        </div>
-      </div>
-    </div>
+    </section>
   </main>
 
-  <section class="container" id="about">
-    <h2>Chi sono</h2>
-    <p>Ciao! Sono Alessandro, appassionato di viaggi e culture del mondo. 
-       In questo sito condivido le mie esperienze e consigli utili per chi vuole scoprire nuovi luoghi.</p>
-  </section>
-
   <footer>
-    <p>© 2025 TravelCulture – Tutti i diritti riservati</p>
+    <div class="container">
+      <p>© <span id="year"></span> TravelCulture. <span class="small" data-i18n="rights">Tutti i diritti riservati.</span></p>
+    </div>
   </footer>
 
+  <button id="topBtn" class="icon" title="Torna su">⬆️</button>
+
+  <script>
+    // ======== DATI ARTICOLI (modifica qui per aggiungere i tuoi) ========
+    const dataItems = [
+      { title: 'Milano in 24 ore', cat: 'Italia', img: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?w=1200', text: 'Guida rapida per visitare Milano in un giorno.', link: '#' },
+      { title: 'Cusco: 10 gemme nascoste', cat: 'Perù', img: 'https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?w=1200', text: 'Luoghi meno turistici e consigli pratici.', link: '#' },
+      { title: 'Organizzare un viaggio low-cost', cat: 'Consigli', img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200', text: 'Budget, voli, alloggi e app utili.', link: '#' },
+    ];
+
+    // ======== i18n testi base IT/EN ========
+    const i18n = {
+      it: {
+        hero_title: 'Esplora il mondo con me',
+        hero_sub: 'Diari di viaggio, consigli e cultura da tutto il mondo.',
+        cta_read: 'Leggi gli articoli',
+        cta_about: 'Chi sono',
+        recent_title: 'Articoli recenti',
+        hint_edit: 'Suggerimento: modifica i dati nel codice per aggiungere articoli in 10 secondi.',
+        about_title: 'Chi sono',
+        about_p1: 'Ciao! Sono Alessandro, appassionato di viaggi e culture. Qui raccolgo itinerari e appunti utili (IT/EN) per organizzare viaggi senza stress e senza spendere una fortuna.',
+        about_p2: 'Questo sito è statico, veloce e gratuito: perfetto per guide, portfolio e progetti personali.',
+        about_bi: 'Bilingue: Italiano / English',
+        about_fast: 'Veloce da caricare su mobile',
+        about_easy: 'Facile da estendere (nuove pagine, gallery)',
+        about_free: 'Hosting gratuito su Vercel',
+        rights: 'Tutti i diritti riservati.'
+      },
+      en: {
+        hero_title: 'Explore the world with me',
+        hero_sub: 'Travel diaries, tips and culture from around the globe.',
+        cta_read: 'Read articles',
+        cta_about: 'About me',
+        recent_title: 'Latest posts',
+        hint_edit: 'Tip: edit the data in code to add posts in 10 seconds.',
+        about_title: 'About me',
+        about_p1: "Hi! I'm Alessandro, passionate about travel and cultures. Here I share itineraries and useful notes (IT/EN) to plan trips stress‑free without overspending.",
+        about_p2: 'This site is static, fast and free: perfect for guides, portfolios and personal projects.',
+        about_bi: 'Bilingual: Italian / English',
+        about_fast: 'Fast to load on mobile',
+        about_easy: 'Easy to extend (new pages, galleries)',
+        about_free: 'Free hosting on Vercel',
+        rights: 'All rights reserved.'
+      }
+    };
+
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
+
+    // ======== Render dinamico delle card ========
+    const cards = $('#cards');
+    function renderCards(list){
+      cards.innerHTML = '';
+      list.forEach(item => {
+        const el = document.createElement('article');
+        el.className = 'card';
+        el.innerHTML = `
+          <img src="${item.img}" alt="${item.title}"/>
+          <div class="content">
+            <span class="badge">${item.cat}</span>
+            <h3>${item.title}</h3>
+            <p>${item.text}</p>
+          </div>`;
+        cards.appendChild(el);
+      });
+    }
+
+    // ======== Ricerca e filtro categoria ========
+    const search = $('#search');
+    function applyFilters(){
+      const q = (search.value||'').toLowerCase();
+      const cat = document.querySelector('.icon.activeCat')?.dataset.filter || 'all';
+      const out = dataItems.filter(i => {
+        const matchQ = !q || i.title.toLowerCase().includes(q) || i.text.toLowerCase().includes(q);
+        const matchC = cat==='all' || i.cat===cat;
+        return matchQ && matchC;
+      });
+      renderCards(out);
+    }
+
+    $$('#post .icon[data-filter]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        $$('#post .icon[data-filter]').forEach(b=>b.classList.remove('activeCat'));
+        btn.classList.add('activeCat');
+        applyFilters();
+      });
+    });
+    search.addEventListener('input', applyFilters);
+
+    // ======== Lingue ========
+    const langBtn = $('#langBtn');
+    const savedLang = localStorage.getItem('lang') || 'it';
+    function setLang(l){
+      localStorage.setItem('lang', l);
+      const dict = i18n[l];
+      $$('[data-i18n]').forEach(el=>{ el.textContent = dict[el.dataset.i18n]; });
+    }
+    langBtn.addEventListener('click', ()=> setLang((localStorage.getItem('lang')==='it')?'en':'it'));
+
+    // ======== Tema chiaro/scuro ========
+    const themeBtn = $('#themeBtn');
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    function setTheme(t){
+      document.body.classList.toggle('light', t==='light');
+      localStorage.setItem('theme', t);
+    }
+    themeBtn.addEventListener('click', ()=> setTheme(document.body.classList.contains('light')?'dark':'light'));
+
+    // ======== Back to top ========
+    const topBtn = $('#topBtn');
+    window.addEventListener('scroll', ()=>{
+      if(window.scrollY>400) topBtn.classList.add('show'); else topBtn.classList.remove('show');
+    });
+    topBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+
+    // ======== Init ========
+    $('#year').textContent = new Date().getFullYear();
+    setTheme(savedTheme); setLang(savedLang); renderCards(dataItems); applyFilters();
+  </script>
 </body>
 </html>
