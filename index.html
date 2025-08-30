@@ -1,118 +1,89 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>TravelCulture – Diario di Viaggi</title>
-<meta name="description" content="Blog di viaggi con guide pratiche e mappe interattive.">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<!-- Leaflet per la mappa -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<style>
-root{ --bg:#0f172a; --card:#111827; --muted:#9ca3af; --text:#e5e7eb; --acc:#22d3ee; --acc2:#a78bfa; }
-*{box-sizing:border-box} html,body{margin:0;padding:0}
-body{font-family:system-ui,-apple-system, Segoe UI, Roboto, Arial, sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-a{color:inherit;text-decoration:none}
-.container{width:min(1100px,92%);margin:0 auto}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TravelCulture – Diario di Viaggi</title>
+  <meta name="description" content="Blog di viaggi con guide pratiche e mappe interattive.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <!-- CSS Leaflet per la mappa -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    :root{--bg:#f8fafc;--card:#fff;--text:#0b1324;--muted:#46566b;--acc:#22d3ee;--acc2:#a78bfa}
+    *{box-sizing:border-box} html,body{margin:0;padding:0}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+    a{color:inherit;text-decoration:none}
+    .container{width:min(1100px,92%);margin:0 auto}
+    header{position:sticky;top:0;backdrop-filter:blur(6px);background:rgba(15,23,42,.7);border-bottom:1px solid #1f2937;z-index:50}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:.8rem 0}
+    .logo{display:flex;align-items:center;gap:.6rem}.logo svg{width:28px;height:28px}.logo .word{font-weight:800;letter-spacing:.4px}
+    .links a{opacity:.85;margin-left:1rem}.links a:hover{opacity:1}
+    .controls{display:flex;gap:.5rem;align-items:center}
+    button.icon{border:1px solid #334155;background:#0b1224;color:#e5e7eb;border-radius:10px;padding:.45rem .6rem;cursor:pointer}
+    .hero{position:relative;min-height:55vh;display:flex;align-items:center;justify-content:center;text-align:center}
+    .slideshow{position:absolute;inset:0;overflow:hidden;border-bottom:1px solid #1f2937}
+    .slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s}
+    .slide.active{opacity:1}
+    .hero-content{position:relative;z-index:2}
+    .cta{display:inline-block;padding:.7rem 1rem;border-radius:12px;border:1px solid #334155}
+    .primary{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#0b1020;border:none;font-weight:700}
+    section{padding:2rem 0} h2{font-size:1.4rem;margin:0 0 1rem}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1rem}
+    .card{grid-column:span 12;background:var(--card);border:1px solid #1f2937;border-radius:16px;overflow:hidden}
+    @media(min-width:640px){.card{grid-column:span 6}} @media(min-width:992px){.card{grid-column:span 4}}
+    .card img{width:100%;height:180px;object-fit:cover}.content{padding:1rem}.badge{display:inline-block;font-size:.75rem;padding:.15rem .5rem;border:1px solid #334155;border-radius:999px;color:var(--muted);margin-bottom:.5rem}
+    #map{height:360px;border-radius:16px;border:1px solid #1f2937}
+    form .row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}@media(max-width:700px){form .row{grid-template-columns:1fr}}
+    input,textarea{width:100%;padding:.7rem .9rem;border-radius:10px;border:1px solid #334155;background:#f1f5f9;color:#0b1324}
+    footer{border-top:1px solid #1f2937;color:#46566b;padding:1.5rem 0;text-align:center}
+  </style>
+</head>
 
+<main>
+  <!-- HERO con slideshow 4 foto (mare, montagna, collina, lago) -->
+  <section class="hero">
+    <div class="slideshow">
+      <img class="slide active" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600" alt="Mare">
+      <img class="slide"        src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1600" alt="Montagna">
+      <img class="slide"        src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600" alt="Collina">
+      <img class="slide"        src="https://images.unsplash.com/photo-1508766206392-8bd5cf550d1b?w=1600" alt="Lago">
+    </div>
 
-/* HEADER */
-header{position:sticky;top:0;backdrop-filter:blur(6px);background:rgba(15,23,42,.7);border-bottom:1px solid #1f2937;z-index:50}
-nav{display:flex;align-items:center;justify-content:space-between;padding:.8rem 0}
-.logo{display:flex;align-items:center;gap:.6rem}
-.logo svg{width:28px;height:28px}
-.logo .word{font-weight:800;letter-spacing:.4px}
-.links a{opacity:.85;margin-left:1rem}
-.links a:hover{opacity:1}
-.controls{display:flex;gap:.5rem;align-items:center}
-button.icon{border:1px solid #334155;background:#0b1224;color:var(--text);border-radius:10px;padding:.45rem .6rem;cursor:pointer}
+    <div class="hero-content container">
+      <h1>Esplora il mondo con me</h1>
+      <p>Diari di viaggio, consigli e cultura da mare, montagna, colline e laghi.</p>
+      <div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+        <a class="cta primary" href="#places">Luoghi da esplorare</a>
+        <a class="cta" href="#explore">Vai alla mappa</a>
+      </div>
+    </div>
+  </section>
 
+  <!-- LUOGHI DA ESPLORARE (le 3 card più recenti da posts.json) -->
+  <section id="places" class="container">
+    <h2>Luoghi da esplorare</h2>
+    <div id="cards" class="grid"></div>
+  </section>
 
-/* HERO + SLIDESHOW */
-.hero{position:relative;min-height:55vh;display:flex;align-items:center;justify-content:center;text-align:center}
-.hero-content{position:relative;z-index:2}
-.hero h1{font-size:clamp(1.8rem,3vw,3rem);margin:0 0 .6rem}
-.hero p{color:var(--muted);margin:0 auto 1rem;max-width:60ch}
-.cta{display:inline-block;padding:.7rem 1rem;border-radius:12px;border:1px solid #334155}
-.primary{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#0b1020;border:none;font-weight:700}
+  <!-- MAPPA INTERATTIVA (Leaflet) -->
+  <section id="explore" class="container">
+    <h2>Esplora</h2>
+    <div id="map"></div>
+  </section>
 
-
-.slideshow{position:absolute;inset:0;overflow:hidden;border-bottom:1px solid #1f2937}
-.slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease}
-.slide.active{opacity:1}
-.slideshow::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,15,30,.55),rgba(10,15,30,.55))}
-
-
-section{padding:2rem 0}
-h2{font-size:1.4rem;margin:0 0 1rem}
-
-
-/* CARDS */
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1rem}
-.card{grid-column:span 12;background:var(--card);border:1px solid #1f2937;border-radius:16px;overflow:hidden;transition:transform .12s ease}
-.card:hover{transform:translateY(-3px)}
-@media(min-width:640px){.card{grid-column:span 6}}
-@media(min-width:992px){.card{grid-column:span 4}}
-.card img{width:100%;height:180px;object-fit:cover;display:block}
-.content{padding:1rem}
-.badge{display:inline-block;font-size:.75rem;padding:.15rem .5rem;border:1px solid #334155;border-radius:999px;color:var(--muted);margin-bottom:.5rem}
-
-
-/* MAPPA */
-#map{height:360px;border-radius:16px;border:1px solid #1f2937}
-
-
-/* CONTACT */
-  form .row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
-// ====== RENDER CARD ======
-const cards = document.getElementById('cards');
-function renderCards(list){
-cards.innerHTML = '';
-list.slice(0,3).forEach(p => { // 3 più recenti
-const a = document.createElement('a');
-a.href = `/articoli/${p.slug}.html`;
-a.className = 'card';
-a.innerHTML = `
-<img src="${p.img}" alt="${p.title}"/>
-<div class="content">
-<span class="badge">${p.city}</span>
-<h3>${p.title}</h3>
-<p>${p.excerpt}</p>
-</div>`;
-cards.appendChild(a);
-});
-}
-
-
-// ====== MAPPA ======
-function renderMap(list){
-const map = L.map('map',{scrollWheelZoom:false});
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
-const group = L.featureGroup();
-list.forEach(p=>{
-const m = L.marker(p.coords).addTo(group).bindPopup(`
-<strong>${p.title}</strong><br>${p.city}<br>
-<a href="/articoli/${p.slug}.html">Apri articolo</a>`);
-});
-group.addTo(map);
-map.fitBounds(group.getBounds().pad(0.3));
-}
-
-
-// ====== SLIDESHOW (4 foto che cambiano ogni 3s) ======
-const slides = [...document.querySelectorAll('.slide')];
-let idx = 0; setInterval(()=>{ slides[idx].classList.remove('active'); idx = (idx+1)%slides.length; slides[idx].classList.add('active'); }, 3000);
-
-
-// ====== THEME TOGGLE & INIT ======
-const themeBtn = document.getElementById('themeBtn');
-function setTheme(t){ document.body.classList.toggle('light', t==='light'); localStorage.setItem('theme', t); }
-themeBtn.addEventListener('click', ()=> setTheme(document.body.classList.contains('light')?'dark':'light'));
-
-
-document.getElementById('year').textContent = new Date().getFullYear();
-setTheme(localStorage.getItem('theme')||'dark');
-loadPosts();
-</script>
-</body>
-</html>
+  <!-- CONTATTI -->
+  <section id="contact" class="container">
+    <h2>Contatti</h2>
+    <form id="contactForm" action="mailto:youremail@example.com" method="post" enctype="text/plain">
+      <div class="row">
+        <label>Nome<br><input name="nome" required></label>
+        <label>Email<br><input type="email" name="email" required></label>
+      </div>
+      <label>Messaggio<br><textarea name="messaggio" required></textarea></label>
+      <div style="margin-top:.8rem;display:flex;gap:.6rem;align-items:center">
+        <button class="cta primary" type="submit">Invia</button>
+        <span class="small">Vuoi l’invio senza mailto? Posso collegare una funzione serverless su Vercel.</span>
+      </div>
+    </form>
+  </section>
+</main>
