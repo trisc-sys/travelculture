@@ -40,36 +40,65 @@
 </head>
 
 <main>
-  <!-- HERO con slideshow 4 foto (mare, montagna, collina, lago) -->
-  <section class="hero">
-    <div class="slideshow">
-      <img class="slide active" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600" alt="Mare">
-      <img class="slide"        src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1600" alt="Montagna">
-      <img class="slide"        src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600" alt="Collina">
-      <img class="slide"        src="https://images.unsplash.com/photo-1508766206392-8bd5cf550d1b?w=1600" alt="Lago">
-    </div>
 
-    <div class="hero-content container">
-      <h1>Esplora il mondo con me</h1>
-      <p>Diari di viaggio, consigli e cultura da mare, montagna, colline e laghi.</p>
-      <div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
-        <a class="cta primary" href="#places">Luoghi da esplorare</a>
-        <a class="cta" href="#explore">Vai alla mappa</a>
-      </div>
-    </div>
-  </section>
+  <!-- Leaflet JS per la mappa (una sola volta nell'HTML) -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <!-- LUOGHI DA ESPLORARE (le 3 card più recenti da posts.json) -->
-  <section id="places" class="container">
-    <h2>Luoghi da esplorare</h2>
-    <div id="cards" class="grid"></div>
-  </section>
+<script>
+(async function () {
+  // Slideshow 4 foto (ogni 3s)
+  const slides = [...document.querySelectorAll('.slide')];
+  if (slides.length) {
+    let i = 0;
+    setInterval(() => {
+      slides[i].classList.remove('active');
+      i = (i + 1) % slides.length;
+      slides[i].classList.add('active');
+    }, 3000);
+  }
 
-  <!-- MAPPA INTERATTIVA (Leaflet) -->
-  <section id="explore" class="container">
-    <h2>Esplora</h2>
-    <div id="map"></div>
-  </section>
+  // Tema (default chiaro)
+  const themeBtn = document.getElementById('themeBtn');
+  function setTheme(t){ document.body.classList.toggle('light', t==='light'); localStorage.setItem('theme', t); }
+  setTheme(localStorage.getItem('theme') || 'light');
+  themeBtn?.addEventListener('click', ()=> setTheme(document.body.classList.contains('light') ? 'dark' : 'light'));
+
+  // Carica i post
+  const cards = document.getElementById('cards');
+  try {
+    const res = await fetch('posts.json', { cache: 'no-store' }); // stesso dominio
+    const { posts } = await res.json();
+    console.log('Loaded posts:', posts);
+
+    // 3 card più recenti
+    cards.innerHTML = posts.slice(0, 3).map(p => `
+      <a class="card" href="/articoli/${encodeURIComponent(p.slug)}.html">
+        <img src="${p.img}" alt="${p.title}">
+        <div class="content">
+          <span class="badge">${p.city}</span>
+          <h3>${p.title}</h3>
+          <p>${p.excerpt}</p>
+        </div>
+      </a>
+    `).join('');
+
+    // Mappa con marker che puntano alle pagine articolo
+    const map = L.map('map', { scrollWheelZoom: false });
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+    const group = L.featureGroup(
+      posts.map(p => L.marker(p.coords).bindPopup(
+        `<strong>${p.title}</strong><br>${p.city}<br><a href="/articoli/${p.slug}.html">Apri articolo</a>`
+      ))
+    );
+    group.addTo(map);
+    map.fitBounds(group.getBounds().pad(0.3));
+  } catch (err) {
+    console.error(err);
+    cards.innerHTML = '<p class="small">Errore nel leggere posts.json.</p>';
+  }
+})();
+</script>
+
 
   <!-- CONTATTI -->
   <section id="contact" class="container">
