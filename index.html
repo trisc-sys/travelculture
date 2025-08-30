@@ -2,10 +2,135 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Travel Culture</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TravelCulture 🌍</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background: #222;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    nav {
+      margin-top: 0.5rem;
+    }
+    nav a {
+      color: #ddd;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+    nav a:hover {
+      color: #fff;
+    }
+    .hero {
+      background: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200") no-repeat center/cover;
+      color: white;
+      text-align: center;
+      padding: 5rem 1rem;
+    }
+    .hero h2 {
+      font-size: 2rem;
+      margin: 0;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 2rem 1rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+    .card .content {
+      padding: 1rem;
+    }
+    .card h3 {
+      margin: 0 0 0.5rem;
+    }
+    footer {
+      background: #222;
+      color: #ccc;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+  </style>
 </head>
 <body>
-  <h1>Benvenuto su TravelCulture 🌍</h1>
-  <p>Il mio primo sito creato con GitHub + Vercel!</p>
+
+  <header>
+    <h1>TravelCulture 🌍</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#articoli">Articoli</a>
+      <a href="#about">Chi sono</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <h2>Esplora il mondo con me</h2>
+    <p>Diari di viaggio, consigli e cultura da tutto il mondo</p>
+  </section>
+
+  <main class="container" id="articoli">
+    <h2>Articoli recenti</h2>
+    <div class="grid">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1543349689-9a4d426bee8e?w=800" alt="Milano">
+        <div class="content">
+          <h3>Milano in 24 ore</h3>
+          <p>Una guida rapida per visitare Milano in un solo giorno.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?w=800" alt="Perù">
+        <div class="content">
+          <h3>Cusco segreta</h3>
+          <p>10 gemme nascoste da scoprire nella capitale Inca.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800" alt="Mare">
+        <div class="content">
+          <h3>Viaggi low cost</h3>
+          <p>Come organizzare viaggi economici senza rinunciare al divertimento.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <section class="container" id="about">
+    <h2>Chi sono</h2>
+    <p>Ciao! Sono Alessandro, appassionato di viaggi e culture del mondo. 
+       In questo sito condivido le mie esperienze e consigli utili per chi vuole scoprire nuovi luoghi.</p>
+  </section>
+
+  <footer>
+    <p>© 2025 TravelCulture – Tutti i diritti riservati</p>
+  </footer>
+
 </body>
 </html>
