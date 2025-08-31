@@ -1,13 +1,13 @@
 {
   "posts": [
     {
-      "slug": "milano",
-      "title": "Milano in 24 ore",
-      "city": "Milano, Italia",
+      "slug": "polcoyo",
+      "title": "Polcoyo, e le montagne arcobaleno in 24 ore",
+      "city": "Polcoyo, Perù",
       "coords": [45.4642, 9.19],
       "img": "https://images.unsplash.com/photo-1543349689-9a4d426bee8e?w=1600",
-      "excerpt": "Guida rapida per Duomo, Galleria, Brera e Navigli.",
-      "body": "Itinerario lampo con suggerimenti su metro giornaliera, terrazza del Duomo e aperitivo sui Navigli."
+      "excerpt": "Montagne arcobaleno: colori naturali, leggende andine.",
+      "body": "Le montagne arcobaleno di Cusco uniscono natura, mito, cultura, e comunità locali."
     },
     {
       "slug": "cusco",
