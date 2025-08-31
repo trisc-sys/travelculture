@@ -30,27 +30,73 @@ footer{border-top:1px solid #1f2937;color:#9ca3af;text-align:center;padding:1rem
 
 
 <main class="container">
-<div class="hero">
-<img src="img/polcoyo.jpeg" alt="polcoyo" />
-</div>
-<h1>Palcoyo, e le montagna Arcobaleno</h1>
-<p class="small">Palcoyo, Perù</p>
-<article>
-<p> A oltre 5.000 metri di altitudine, nelle Ande di Cusco, si trovano le celebri Montagne dei Colori. La più famosa è <strong>Vinicunca</strong>, ma nei dintorni si possono visitare anche <strong>Palcoyo</strong>, con tre creste colorate vicine, e <strong>Pallay Punchu</strong>. </p>
-<p> Secondo una leggenda diffusa nelle comunità quechua, i colori delle montagne arcobaleno nacquero quando un arcobaleno, dopo aver illuminato il cielo per giorni interi, si sdraiò a riposare sulla cordigliera. Quando si dissolse, lasciò impressi i suoi colori sulla terra: rosso, verde, giallo e viola rimasero scolpiti per sempre nelle rocce. Per gli abitanti andini, questo segno non è solo un <strong>dono della Pachamama</strong>, ma anche un simbolo di protezione: la montagna colorata veglia sulla valle e ricorda che <strong>cielo e terra sono uniti in un legame eterno</strong>.</p>
-<p>Nel corso di milioni di anni, la sedimentazione dei minerali ha creato questa tavolozza naturale unica:</p>
-<ul>
-  <li>Il <strong>Rosso</strong> dagli ossidi di ferro</li>
-  <li>Il <strong>Verde</strong> dalla clorite e dai composti di rame</li>
-  <li>Il <strong>Giallo</strong> dalla limonite</li>
-  <li>Il <strong>Bianco</strong> dal quarzo e dall’arenaria chiara</li>
-  <li>Le sfumature di <strong>Viola</strong> e <strong>Turchese</strong> dalla goethite e dai filoni di magnesio</li>
-</ul>
-<p>Oggi sono le comunità locali di Cusipata e Pitumarca a gestire gli ingressi, chiedendo un contributo di <strong>20 soles</strong>. </p>
-<p> <strong>Polcoyo</strong> offre un’esperienza più autentica e tranquilla rispetto ad altre montagne arcobaleno: il percorso è meno affollato, più accessibile e permette di ammirare diverse cime colorate nello stesso panorama, regalando un colpo d’occhio unico e suggestivo.</p>
-</article>
-<p><a href="/">← Torna alla home</a></p>
+
+  <!-- HERO -->
+  <div class="hero">
+    <img src="/img/polcoyo.jpeg" alt="Palcoyo" class="hero-img">
+  </div>
+
+  <!-- CONTENUTO -->
+  <div class="content">
+    <h1>Palcoyo – Le montagne arcobaleno</h1>
+    <p class="small">Palcoyo, Perù</p>
+
+    <article>
+      <p>A oltre <strong>5.000 metri di altitudine</strong>, nelle Ande di Cusco, si trovano le celebri <strong>Montagne dei Colori</strong>. 
+      La più famosa è Vinicunca, ma nei dintorni si possono visitare anche <strong>Palcoyo</strong>, con tre creste colorate vicine, e <strong>Pallay Punchu</strong>.</p>
+
+      <p>Secondo una leggenda diffusa nelle comunità quechua, i colori delle montagne arcobaleno nacquero quando un arcobaleno, dopo aver illuminato il cielo per giorni interi, 
+      si sdraiò a riposare sulla cordigliera. Quando si dissolse, lasciò impressi i suoi colori sulla terra: rosso, verde, giallo e viola rimasero scolpiti per sempre nelle rocce. 
+      Per gli abitanti andini, questo segno non è solo un <strong>dono della Pachamama</strong>, ma anche un simbolo di protezione: la montagna colorata veglia sulla valle e ricorda che 
+      <strong>cielo e terra sono uniti in un legame eterno</strong>.</p>
+
+      <p>Nel corso di milioni di anni, la sedimentazione dei minerali ha creato una tavolozza naturale unica:</p>
+      <ul>
+        <li>Il <strong>Rosso</strong> dagli ossidi di ferro</li>
+        <li>Il <strong>Verde</strong> dalla clorite e dai composti di rame</li>
+        <li>Il <strong>Giallo</strong> dalla limonite</li>
+        <li>Il <strong>Bianco</strong> dal quarzo e dall’arenaria chiara</li>
+        <li>Le sfumature di <strong>Viola</strong> e <strong>Turchese</strong> dalla goethite e dai filoni di magnesio</li>
+      </ul>
+
+      <p>Oggi sono le comunità locali di <strong>Cusipata</strong> e <strong>Pitumarca</strong> a gestire gli ingressi, chiedendo un contributo di <strong>20 soles</strong>.</p>
+
+      <p><strong>Palcoyo</strong> offre un’esperienza più autentica e tranquilla rispetto ad altre montagne arcobaleno: il percorso è meno affollato, più accessibile e permette di ammirare diverse cime colorate nello stesso panorama, regalando un colpo d’occhio unico e suggestivo.</p>
+    </article>
+
+    <p><a href="/">← Torna alla home</a></p>
+  </div>
 </main>
+
+<style>
+  .hero {
+    position: relative;
+    height: 60vh;
+    overflow: hidden;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+  }
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  .content h1 {
+    margin-top: 0;
+    font-size: 2rem;
+  }
+  .content h2 {
+    margin-top: 2rem;
+    font-size: 1.4rem;
+  }
+</style>
+
 
 
 <footer>
